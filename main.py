@@ -4,8 +4,8 @@ import os
 
 app = Flask(__name__)
 
-print("DATABASE_URL")
-print(os.environ.get("Postgres.DATABASE_URL"))
+print("all environment variables")
+print(os.environ)
 
 connection = psycopg2.connect(
     host=os.environ.get("Postgres.DATABASE_URL"),
