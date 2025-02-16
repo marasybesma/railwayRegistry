@@ -38,5 +38,23 @@ def check(id: int):
         print(e)
         return jsonify({"error": "oopsie woopsie! uwu we made a fucky wucky!! a wittle fucko boingo!"}), 404
 
+@app.route('/uncheck/<int:id>')
+def uncheck(id: int):
+    print(id)
+
+    query = "UPDATE items SET checked = FALSE WHERE id = {0}".format(id)
+    print(query)
+    
+    try:
+        with connection:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                
+        return jsonify({"success":True}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "oopsie woopsie! uwu we made a fucky wucky!! a wittle fucko boingo!"}), 404
+
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
