@@ -11,7 +11,8 @@ connection = psycopg2.connect(
     host=os.environ.get("PGHOST"),
     user=os.environ.get("POSTGRES_USER"),
     password=os.environ.get("POSTGRES_PASSWORD"),
-    port=int(os.environ.get("PGPORT"))
+    port=int(os.environ.get("PGPORT")),
+    database=os.environ.get("PGDATABASE")
 )
 
 @app.route('/')
