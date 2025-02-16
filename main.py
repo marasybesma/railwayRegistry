@@ -8,10 +8,10 @@ print("all environment variables")
 print(os.environ)
 
 connection = psycopg2.connect(
-    host=os.environ.get("Postgres.DATABASE_URL"),
-    user=os.environ.get("Postgres.POSTGRES_USER"),
-    password=os.environ.get("Postgres.POSTGRES_PASSWORD"),
-    port=int(os.environ.get("Postgres.PGPORT"))
+    host=os.environ.get("DATABASE_URL"),
+    user=os.environ.get("POSTGRES_USER"),
+    password=os.environ.get("POSTGRES_PASSWORD"),
+    port=int(os.environ.get("PGPORT"))
 )
 
 @app.route('/')
