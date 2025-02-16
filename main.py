@@ -18,7 +18,10 @@ def getAll():
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM items;")
             items = cursor.fetchall()
-    return jsonify(items)
+
+    response = jsonify(items)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/check/<int:id>')
 def check(id: int):
@@ -31,7 +34,7 @@ def check(id: int):
         with connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
-                
+        
         return jsonify({"success":True}), 200
 
     except Exception as e:
