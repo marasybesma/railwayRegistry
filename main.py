@@ -8,7 +8,7 @@ print("all environment variables")
 print(os.environ)
 
 connection = psycopg2.connect(
-    host=os.environ.get("DATABASE_PUBLIC_URL"),
+    host=os.environ.get("PGHOST"),
     user=os.environ.get("POSTGRES_USER"),
     password=os.environ.get("POSTGRES_PASSWORD"),
     port=int(os.environ.get("PGPORT"))
