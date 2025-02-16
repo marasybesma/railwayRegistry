@@ -24,7 +24,7 @@ def getAll():
 def check(id: int):
     print(id)
 
-    query = "UPDATE items SET checked = TRUE WHERE id = {id}"
+    query = "UPDATE items SET checked = TRUE WHERE id = {0}".format(id)
     print(query)
     
     try:
