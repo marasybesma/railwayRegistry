@@ -5,9 +5,10 @@ import os
 app = Flask(__name__)
 
 connection = psycopg2.connect(
-    host=os.environ.get("Postgres.PGUSER"),
+    host=os.environ.get("Postgres.DATABASE_URL"),
     user=os.environ.get("Postgres.POSTGRES_USER"),
-    password=os.environ.get("Postgres.POSTGRES_PASSWORD")
+    password=os.environ.get("Postgres.POSTGRES_PASSWORD"),
+    port=int(os.environ.get("Postgres.PGPORT"))
 )
 
 @app.route('/')
