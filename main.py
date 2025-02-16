@@ -18,7 +18,7 @@ connection = psycopg2.connect(
 def index():
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM items;")
+            cursor.execute("SELECT * FROM 'items';")
             items = cursor.fetchall()
     return jsonify(items)
 
