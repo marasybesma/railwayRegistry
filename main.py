@@ -8,7 +8,7 @@ connection = psycopg2.connect(
     host="${{Postgres.PGUSER}}",
     user="${{Postgres.POSTGRES_USER}}",
     password="${{Postgres.POSTGRES_PASSWORD}}",
-    port=${{Postgres.PGPORT}}
+    port="${{Postgres.PGPORT}}"
 )
 
 @app.route('/')
