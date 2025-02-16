@@ -12,27 +12,30 @@ connection = psycopg2.connect(
     database=os.environ.get("PGDATABASE")
 )
 
-def sortByPrice(e):
-    return e[4]
-
 @app.route('/')
 def getAll():
     with connection:
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM items;")
-            items = cursor.fetchall().sort(key=sortByPrice)
+            items = cursor.fetchall()
     return jsonify(items)
 
 @app.route('/check/<int:id>')
 def check(id: int):
+    print(id)
+
+    query = "UPDATE items SET checked = TRUE WHERE id = {id}"
+    print(query)
+    
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute("UPDATE items SET checked = TRUE WHERE id = {id}" )
+                cursor.execute(query)
                 
         return jsonify({"success":True}), 200
 
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"error": "oopsie woopsie! uwu we made a fucky wucky!! a wittle fucko boingo!"}), 404
 
 if __name__ == '__main__':
