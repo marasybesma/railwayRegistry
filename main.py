@@ -7,8 +7,7 @@ app = Flask(__name__)
 connection = psycopg2.connect(
     host="${{Postgres.PGUSER}}",
     user="${{Postgres.POSTGRES_USER}}",
-    password="${{Postgres.POSTGRES_PASSWORD}}",
-    port="${{Postgres.PGPORT}}"
+    password="${{Postgres.POSTGRES_PASSWORD}}"
 )
 
 @app.route('/')
