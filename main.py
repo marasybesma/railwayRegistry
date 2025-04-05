@@ -18,7 +18,7 @@ def log(action, id, ip, user_agent):
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM items WHERE id = %s;", (id))
+                cursor.execute("SELECT * FROM items WHERE id = %s;", (id,))
                 print("{date} | {action} id {id} ({name}) | IP: {ip} } USER-AGENT: {user_agent}".format(
                     date = datetime.datetime.now(),
                     action = action,
@@ -49,7 +49,7 @@ def check(id: int):
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (id))
+                cursor.execute(query, (id,))
         
         return jsonify({"success":True}), 200
 
@@ -65,7 +65,7 @@ def uncheck(id: int):
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, (id))
+                cursor.execute(query, (id,))
                 
         return jsonify({"success":True}), 200
 
