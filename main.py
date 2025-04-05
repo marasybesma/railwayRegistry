@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import psycopg2
 import os
 import datetime
+import traceback
 
 app = Flask(__name__)
 
@@ -26,8 +27,8 @@ def log(action, id, ip, user_agent):
                     user_agent = user_agent
                 ))
                 
-    except Exception as e:
-        print(e)
+    except Exception:
+        print(traceback.format_exc())
 
 @app.route('/')
 def getAll():
@@ -52,8 +53,8 @@ def check(id: int):
         
         return jsonify({"success":True}), 200
 
-    except Exception as e:
-        print(e)
+    except Exception:
+        print(traceback.format_exc())
         return jsonify({"error": "oopsie woopsie! uwu we made a fucky wucky!! a wittle fucko boingo!"}), 404
 
 @app.route('/uncheck/<int:id>')
@@ -68,8 +69,8 @@ def uncheck(id: int):
                 
         return jsonify({"success":True}), 200
 
-    except Exception as e:
-        print(e)
+    except Exception:
+        print(traceback.format_exc())
         return jsonify({"error": "oopsie woopsie! uwu we made a fucky wucky!! a wittle fucko boingo!"}), 404
 
 if __name__ == '__main__':
