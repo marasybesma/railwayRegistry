@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import psycopg2
 import os
+import datetime
 
 app = Flask(__name__)
 
@@ -11,6 +12,22 @@ connection = psycopg2.connect(
     port=int(os.environ.get("PGPORT")),
     database=os.environ.get("PGDATABASE")
 )
+
+def log(action, id, ip, user_agent):
+    try:
+        with connection:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM items WHERE id = %s;", id)
+                print("{date} | {action} id {id} ({name}) | IP: {ip} } USER-AGENT: {user_agent}".format(
+                    date = datetime.datetime.now(),
+                    action = action,
+                    name = cursor.fetchall()[0][1],
+                    id = id,
+                    user_agent = user_agent
+                )
+                
+    except Exception as e:
+        print(e)
 
 @app.route('/')
 def getAll():
@@ -25,15 +42,13 @@ def getAll():
 
 @app.route('/check/<int:id>')
 def check(id: int):
-    print(id)
-
-    query = "UPDATE items SET checked = TRUE WHERE id = {0}".format(id)
-    print(query)
+    log("CHECKED", id, request.remote_addr, request.user_agent)
+    query = "UPDATE items SET checked = TRUE WHERE id = %s AND NOT locked"
     
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query)
+                cursor.execute(query, id)
         
         return jsonify({"success":True}), 200
 
@@ -43,15 +58,13 @@ def check(id: int):
 
 @app.route('/uncheck/<int:id>')
 def uncheck(id: int):
-    print(id)
-
-    query = "UPDATE items SET checked = FALSE WHERE id = {0}".format(id)
-    print(query)
+    log("UNCHECKED", id, request.remote_addr, request.user_agent)
+    query = "UPDATE items SET checked = FALSE WHERE id = %s AND NOT locked"
     
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query)
+                cursor.execute(query, id)
                 
         return jsonify({"success":True}), 200
 
