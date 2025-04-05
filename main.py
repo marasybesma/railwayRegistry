@@ -48,7 +48,7 @@ def check(id: int):
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, id)
+                cursor.execute(query, (id))
         
         return jsonify({"success":True}), 200
 
@@ -64,7 +64,7 @@ def uncheck(id: int):
     try:
         with connection:
             with connection.cursor() as cursor:
-                cursor.execute(query, id)
+                cursor.execute(query, (id))
                 
         return jsonify({"success":True}), 200
 
