@@ -22,8 +22,9 @@ def log(action, id, ip, user_agent):
                 print("{date} | {action} id {id} ({name}) | IP: {ip} } USER-AGENT: {user_agent}".format(
                     date = datetime.datetime.now(),
                     action = action,
-                    name = cursor.fetchall()[0][1],
                     id = id,
+                    name = cursor.fetchall()[0][1],
+                    ip = ip,
                     user_agent = user_agent
                 ))
                 
