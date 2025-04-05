@@ -24,7 +24,7 @@ def log(action, id, ip, user_agent):
                     name = cursor.fetchall()[0][1],
                     id = id,
                     user_agent = user_agent
-                )
+                ))
                 
     except Exception as e:
         print(e)
